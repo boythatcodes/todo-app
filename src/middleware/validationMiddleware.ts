@@ -24,7 +24,7 @@ export function validateBodyData(schema: z.ZodObject<any, any>) {
 export function validateHeaderData(schema: z.ZodObject<any, any>) {
     return (req: Request, res: Response, next: NextFunction)  => {
         try {
-            schema.parse(req.headers);
+            schema.parse(req.query);
             next();
         } catch (error) {
             if (error instanceof ZodError) {

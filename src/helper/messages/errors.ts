@@ -1,8 +1,9 @@
 // User
-export const emailOrPasswordErrorMessage = "The email or password is invalid."
-export const emailVerificaitonErrorMessage = "The verification url is incorrect."
-export const emailNotVerifiedErrorMessage = "Verify the email first to login."
-
+export const emailOrPasswordErrorMessage = "The email or password is invalid"
+export const emailVerificaitonErrorMessage = "The verification url is incorrect"
+export const emailNotVerifiedErrorMessage = "Verify the email first to login"
+export const emailAlreadyVerified = "Email is Already Verified"
+export const emailErrorOrAlreadyVerified = "Email provided is incorrect or the user is already verified";
 
 // Unexpected
 export const unexpectedNowRedirectErrorMessage = "Unexpected error, redirecting to url.";

@@ -29,6 +29,10 @@ export const userUpdateValidationSchema = z.object({
     email: z.string().email()
 });
 
+export const userResendEmail = z.object({
+    email: z.string().email()
+});
+
 
 export const userVerificationValidationSchema = z.object({
     e: z.string().email(),
