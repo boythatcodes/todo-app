@@ -9,7 +9,7 @@ export const users = mysqlTable("users", {
   password: text('password').notNull(),
 
   emailVerified: boolean('email_verified').default(false),
-  emailVerificaitonCode: varchar('email_verificaiton_code', { length: 8 }).notNull(),
+  emailVerificationCode: varchar('email_verificaiton_code', { length: 8 }).notNull(),
   
   status: mysqlEnum('status', ['admin', 'user', 'blocked']).default('user').notNull(),
   
@@ -17,3 +17,12 @@ export const users = mysqlTable("users", {
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
 });
+
+
+export const sessions = mysqlTable("sessions", {
+  id: varchar('id', { length: 255 }).primaryKey(),
+  userId: int('user_id').references(() => users.id),
+  sessionToken: varchar('session_token', { length: 255 }).unique().notNull(),
+  expires: datetime('expires').notNull(),
+  createdAt: datetime('created_at').default(new Date()),
+})
