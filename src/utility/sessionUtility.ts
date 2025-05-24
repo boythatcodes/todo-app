@@ -1,7 +1,7 @@
 import { sessions, users } from '../db/schema';
 import { randomBytes } from 'crypto';
 import { eq } from "drizzle-orm";
-import { generateRandomString } from '../helper/helper';
+import { generateRandomString } from '../utility/helper';
 import { db } from '../db/db';
 
 export async function createSession(userId: number) {

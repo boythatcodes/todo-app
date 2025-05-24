@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { lowercaseErrorMessage, maxLengthErrorMessage, minLengthErrorMessage, numberErrorMessage, specialCharacterErrorMessage, uppercaseErrorMessage } from "../helper/messages/errors";
+import { lowercaseErrorMessage, maxLengthErrorMessage, minLengthErrorMessage, numberErrorMessage, specialCharacterErrorMessage, uppercaseErrorMessage } from "../../utility/messages/errors";
 
 export const userLoginValidationSchema = z.object({
     email: z.string().email(),

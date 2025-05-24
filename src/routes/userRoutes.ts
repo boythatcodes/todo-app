@@ -1,7 +1,7 @@
 import express from "express"
 import { validateBodyData, validateHeaderData } from "../middleware/validationMiddleware"
-import { userCreationValidationSchema, userLoginValidationSchema, userResendEmail, userVerificationValidationSchema } from "../schema/userSchema"
-import { loginUser, registerUser, resendVerification, verifyUserEmail } from "../controller/userController"
+import { userCreationValidationSchema, userLoginValidationSchema, userResendEmail, userVerificationValidationSchema } from "../controller/user/userSchema"
+import { loginUser, registerUser, resendVerification, verifyUserEmail } from "../controller/user/userController"
 
 const router = express.Router()
 

@@ -1,14 +1,14 @@
 import { type Request, type Response } from 'express';
 import { drizzle } from 'drizzle-orm/mysql2'
-import { hashPassword, verifyPassword } from '../helper/password';
-import { error_json, generateRandomString, success_json } from '../helper/helper';
-import { users } from '../db/schema';
-import { emailVerifiedSuccessMessage, loginSuccessMessage, signUpSuccessMessage, verificationCodeSentInEmail } from '../helper/messages/success';
-import { emailAlreadyUsedErrorMessage, emailErrorOrAlreadyVerified, emailNotVerifiedErrorMessage, emailOrPasswordErrorMessage, emailVerificaitonErrorMessage } from '../helper/messages/errors';
+import { hashPassword, verifyPassword } from '../../utility/password';
+import { error_json, generateRandomString, success_json } from '../../utility/helper';
+import { users } from '../../db/schema';
+import { emailVerifiedSuccessMessage, loginSuccessMessage, signUpSuccessMessage, verificationCodeSentInEmail } from '../../utility/messages/success';
+import { emailAlreadyUsedErrorMessage, emailErrorOrAlreadyVerified, emailNotVerifiedErrorMessage, emailOrPasswordErrorMessage, emailVerificaitonErrorMessage } from '../../utility/messages/errors';
 import { eq, and, not } from "drizzle-orm";
-import { db } from '../db/db';
-import { createSession } from '../utility/sessionUtility';
-import send_mail from '../utility/mailUtility';
+import { db } from '../../db/db';
+import { createSession } from '../../utility/sessionUtility';
+import send_mail from '../../utility/mailUtility';
 
 
 

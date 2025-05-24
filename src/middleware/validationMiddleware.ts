@@ -1,6 +1,6 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import { z, ZodError } from 'zod';
-import { error_json } from '../helper/helper';
+import { error_json } from '../utility/helper';
 
 export function validateBodyData(schema: z.ZodObject<any, any>) {
     return (req: Request, res: Response, next: NextFunction)  => {
