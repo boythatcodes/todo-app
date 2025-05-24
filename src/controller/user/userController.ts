@@ -85,9 +85,7 @@ export const verifyUserEmail = async (req: Request, res: Response) => {
 	}
 
 
-	success_json(res, emailVerifiedSuccessMessage, {
-		url: "/login"
-	}, "redirect")
+	res.redirect(`${process.env.FRONTEND_URL}/login`)
 }
 
 export const loginUser = async (req: Request, res: Response) => {
