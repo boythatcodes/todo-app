@@ -11,6 +11,11 @@ import { createSession } from '../../utility/sessionUtility';
 import send_mail from '../../utility/mailUtility';
 
 
+export const getUser = async (req: Request, res: Response) => {
+	success_json(res, "", req.user);
+	return;
+}
+
 
 export const registerUser = async (req: Request, res: Response) => {
 	const db = drizzle(process.env.DATABASE_URL as string);
@@ -27,24 +32,28 @@ export const registerUser = async (req: Request, res: Response) => {
 		});
 	} catch (err) {
 		error_json(res, emailAlreadyUsedErrorMessage)
+		return;
 	}
 
-	await send_mail(auth.email, "Verification for Proshore todo app.", `<b>Thankyou for choosing proshore todo app.</b><div>You can use the link to verfify your account <a href="${process.env.WEBAPP_URL}/user/verify-email?e=${auth.email}&v=${emailVerificationCode}">Link</a> </div>`)
+	await send_mail(auth.email, "Verification for Proshore todo app.", `<b>Thankyou for choosing proshore todo app.</b><div>You can use the link to verfify your account <a href="${process.env.WEBAPP_URL}/user/verify-email?e=${auth.email}&v=${emailVerificationCode}">${process.env.WEBAPP_URL}/user/verify-email?e=${auth.email}&v=${emailVerificationCode}</a> </div>`)
 
 
 	if (process.env.DEV == "true") {
 		success_json(res, signUpSuccessMessage, {
 			code: emailVerificationCode,
-			email: auth.email
-		})
+			email: auth.email,
+			url: "/email-verification?e=" + auth.email
+		}, "redirect")
+		return;
 	}
 
 	success_json(res, signUpSuccessMessage, {
-		url: "/email-verification"
+		url: "/email-verification?e=" + auth.email
 	}, "redirect");
+	return;
 };
 
-export const resendVerification = async(req: Request, res: Response) => {
+export const resendVerification = async (req: Request, res: Response) => {
 	const { email } = req.body;
 	const emailVerificationCode = generateRandomString(8);
 
@@ -55,13 +64,13 @@ export const resendVerification = async(req: Request, res: Response) => {
 
 	if (result[0].affectedRows === 0) {
 		error_json(res, emailErrorOrAlreadyVerified, {})
+		return;
 	}
 
-	await send_mail(email, "Verification for Proshore todo app.", `<b>Thankyou for choosing proshore todo app.</b><div>You can use the link to verfify your account <a href="${process.env.WEBAPP_URL}/user/verify-email?e=${email}&v=${emailVerificationCode}">Link</a> </div>`);
+	await send_mail(email, "Verification for Proshore todo app.", `<b>Thankyou for choosing proshore todo app.</b><div>You can use the link to verfify your account <a href="${process.env.WEBAPP_URL}/user/verify-email?e=${email}&v=${emailVerificationCode}">${process.env.WEBAPP_URL}/user/verify-email?e=${email}&v=${emailVerificationCode}</a> </div>`);
 
-	success_json(res, verificationCodeSentInEmail, {
-		url: "/login"
-	}, "redirect")
+	success_json(res, verificationCodeSentInEmail, {})
+	return;
 }
 
 
@@ -69,19 +78,17 @@ export const verifyUserEmail = async (req: Request, res: Response) => {
 	const { e, v } = req.query;
 
 	const result = await db
-	.update(users)
-	.set({ emailVerified: true })
-	.where(and(
-		eq(users.email, e as string),
-		eq(users.emailVerificationCode, v as string),  // Fixed typo
-		not(eq(users.status, 'blocked'))
-	));
+		.update(users)
+		.set({ emailVerified: true })
+		.where(and(
+			eq(users.email, e as string),
+			eq(users.emailVerificationCode, v as string),  // Fixed typo
+			not(eq(users.status, 'blocked'))
+		));
 
 	// Check if update was successful
 	if (result[0].affectedRows === 0) {
-		error_json(res, emailVerificaitonErrorMessage, {
-			url: "/email-verfication-error"
-		}, "redirect")
+		res.redirect(`${process.env.FRONTEND_URL}/email-verfication-error?e=${users.email}`)
 	}
 
 
@@ -99,12 +106,15 @@ export const loginUser = async (req: Request, res: Response) => {
 
 	if (!result[0].emailVerified) {
 		error_json(res, emailNotVerifiedErrorMessage)
+		return;
 	}
 
 	if (!await verifyPassword(result[0].password, password)) {
 		error_json(res, emailOrPasswordErrorMessage)
+		return;
 	}
 
 
-	success_json(res.setHeader("sesson", await createSession(result[0].id)), loginSuccessMessage, {}, "sesson_token");
+	success_json(res, loginSuccessMessage, { session: await createSession(result[0].id) }, "sesson_token");
+	return;
 };

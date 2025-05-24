@@ -16,9 +16,11 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
     "@types/nodemailer": "^6.4.17",
     "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
     "drizzle-orm": "^0.43.1",
     "express": "^5.1.0",
     "mysql2": "^3.14.1",

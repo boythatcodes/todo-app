@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { generateRandomString } from '../utility/helper';
 import { db } from '../db/db';
 
+
 export async function createSession(userId: number) {
     const sessionToken = randomBytes(64).toString('hex');
     const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 1 week
@@ -34,7 +35,13 @@ export async function validateSession(token: string) {
         return null;
     }
 
-    return session.users;
+    return {
+        id: session.users.id,
+        name: session.users.name,
+        email: session.users.email,
+        emailVerified: session.users.emailVerified,
+        status: session.users.status,
+    };
 }
 
 export async function deleteSession(token: string) {

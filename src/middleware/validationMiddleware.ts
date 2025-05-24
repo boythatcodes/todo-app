@@ -13,7 +13,7 @@ export function validateBodyData(schema: z.ZodObject<any, any>) {
                     message: `${issue.path.join('.')} is ${issue.message}`,
                 }));
 
-                error_json(res, "Invalid data", { details: errorMessages }, "zod_error");
+                error_json(res, `Incorrect Data: ${error.errors[0].path.join('.')} is ${error.errors[0].message}`, { details: errorMessages }, "zod_error");
             } else {
                 error_json(res, "Internal Server Error", {}, "server_error");
             }
@@ -32,7 +32,7 @@ export function validateHeaderData(schema: z.ZodObject<any, any>) {
                     message: `${issue.path.join('.')} is ${issue.message}`,
                 }));
 
-                error_json(res, "Invalid data", { details: errorMessages }, "zod_error");
+                error_json(res, `Incorrect Data: ${error.errors[0].path.join('.')} is ${error.errors[0].message}`, { details: errorMessages }, "zod_error");
             } else {
                 error_json(res, "Internal Server Error", {}, "server_error");
             }
