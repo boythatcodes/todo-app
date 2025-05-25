@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useRoute} from 'vue-router';
 import {onMounted} from "vue";
-import {resetLink} from "@/api/user/user.ts";
+import {resetLink} from "@/api/user/userApi.ts";
 
 const prop = defineProps<{
   title: string;

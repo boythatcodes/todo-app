@@ -32,3 +32,11 @@
     font-size: 14px !important;
     z-index: 1000;
 }
+
+.custom-button {
+    @apply text-white cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-xl px-4 shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105;
+}
+
+.custom-secondary-button {
+    @apply rounded-xl px-4 border border-purple-200 hover:border-purple-400 transition-all duration-200 hover:shadow-lg hover:scale-105 cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 py-2 bg-gradient-to-r bg-white shadow-lg;
+}
