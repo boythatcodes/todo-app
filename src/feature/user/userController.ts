@@ -74,9 +74,16 @@ export const resendVerification = async (req: Request, res: Response) => {
 		error_json(res, emailErrorOrAlreadyVerified, {})
 		return;
 	}
-
-	await send_mail(email, "Verification for Proshore todo app.", `<b>Thankyou for choosing proshore todo app.</b><div>You can use the link to verfify your account <a href="${process.env.WEBAPP_URL}/user/verify-email?e=${email}&v=${emailVerificationCode}">${process.env.WEBAPP_URL}/user/verify-email?e=${email}&v=${emailVerificationCode}</a> </div>`);
-
+	try {
+		await send_mail(email, "Verification for Proshore todo app.", `<b>Thankyou for choosing proshore todo app.</b><div>You can use the link to verfify your account <a href="${process.env.WEBAPP_URL}/user/verify-email?e=${email}&v=${emailVerificationCode}">${process.env.WEBAPP_URL}/user/verify-email?e=${email}&v=${emailVerificationCode}</a> </div>`);
+	} catch (error) {
+		success_json(res, signUpSuccessMessage, {
+			code: emailVerificationCode,
+			email: auth.email,
+			url: "/email-verification?e=" + auth.email
+		}, "redirect")
+		return;
+	}
 	success_json(res, verificationCodeSentInEmail, {})
 	return;
 }
@@ -100,7 +107,7 @@ export const verifyUserEmail = async (req: Request, res: Response) => {
 	}
 
 
-	res.redirect(`${process.env.FRONTEND_URL}/login`)
+	res.redirect(`${process.env.FRONTEND_URL}/`)
 }
 
 export const loginUser = async (req: Request, res: Response) => {
