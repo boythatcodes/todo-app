@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import user from "./routes/userRoutes";
 import cors from "cors";
 import todoRoutes from "./routes/todoRoutes.ts";
+import path from "path";
 
 
 const app = express();
@@ -28,14 +29,26 @@ const corsOptions: cors.CorsOptions = {
 
 app.use(cors(corsOptions));
 
+
 app.use(bodyParser.json());
-app.get("/", async (req, res) => {
-    res.send("Hello World!");
-});
 
 app.use("/user", user)
 app.use("/todos", todoRoutes)
 
+if (process.env.DEV === 'false') {
+  const vueAppPath = path.join(__dirname, '../frontend/dist');
+
+  app.use(express.static(vueAppPath));
+  
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(vueAppPath, 'index.html'));
+  });
+} else {
+  
+  app.get('/', (req, res) => {
+    res.send('API is running....')
+  })
+}
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
 });
