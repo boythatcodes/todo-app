@@ -83,3 +83,22 @@ CRUD operations for Todos.
 - Implement password reset functionality.
 - Write unit tests (e.g., Jest for backend, Vue Test Utils).
 
+**Screen shots:**
+
+Todo page:
+![./screenshots/todo_page.png](./screenshots/todo_page.png)
+
+Todo with Create:
+![./screenshots/todo_page.png](./screenshots/todo_with_create.png)
+
+Login:
+![./screenshots/todo_page.png](./screenshots/login_page.png)
+
+Signup:
+![./screenshots/todo_page.png](./screenshots/signup_page.png)
+
+Email Verificaiton:
+![./screenshots/todo_page.png](./screenshots/veriation_pagefic.png)
+
+Email Sent:
+![./screenshots/todo_page.png](./screenshots/email_sent.png)
