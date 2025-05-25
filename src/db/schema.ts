@@ -26,3 +26,15 @@ export const sessions = mysqlTable("sessions", {
   expires: datetime('expires').notNull(),
   createdAt: datetime('created_at').default(new Date()),
 })
+
+export const todos = mysqlTable("todos", {
+  id: int('id').primaryKey().autoincrement(),
+  userId: int('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }), 
+  name: varchar('name', { length: 256 }).notNull(),
+  shortDescription: text('short_description').notNull(),
+  dateTime: datetime('date_time', { mode: 'string' }).notNull(), 
+  isDone: boolean('is_done').default(false).notNull(), 
+  createdAt: datetime('created_at')
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+});

@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from 'body-parser';
 import user from "./routes/userRoutes";
 import cors from "cors";
+import todoRoutes from "./routes/todoRoutes.ts";
 
 
 const app = express();
@@ -33,6 +34,7 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/user", user)
+app.use("/todos", todoRoutes)
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
