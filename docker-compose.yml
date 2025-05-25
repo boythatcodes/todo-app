@@ -1,0 +1,57 @@
+services:
+  mysql_db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: your_mysql_root_password 
+      MYSQL_DATABASE: db_name
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306" 
+    volumes:
+      - mysql_data:/var/lib/mysql 
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./ 
+      dockerfile: Dockerfile
+    container_name: node_express_backend
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DATABASE_URL: mysql://user:password@mysql_db:3306/db_name 
+      DEV: true
+      SMTP_USER: mail@domain.com
+      SMTP_PASS: password
+      WEBAPP_URL: http://localhost:3000
+      FRONTEND_URL: http://localhost:5173
+    depends_on:
+      mysql_db:
+        condition: service_healthy 
+    command: sh -c "bun run db:migrate && bun run dev"
+    volumes:
+      - .:/app 
+      - /app/node_modules
+
+  frontend:
+    build:
+      context: ./frontend 
+      dockerfile: Dockerfile
+    container_name: vue_frontend
+    ports:
+      - "5173:80" 
+    depends_on:
+      - backend 
+    volumes:
+      - ./frontend:/app 
+      - /app/node_modules 
+
+volumes:
+  mysql_data:
