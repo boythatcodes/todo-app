@@ -1,5 +1,10 @@
 # todo-app
 ### [todo.sairashgautam.com.np](https://todo.sairashgautam.com.np/)
+if you don't want to make account,  
+- email: gautamsairash@gmail.com
+- password: GAutamsairash12!@
+
+
 
 This is the backend side of the todo app. View frontend on the frontend.
 
