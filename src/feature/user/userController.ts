@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/mysql2'
 import { hashPassword, verifyPassword } from '../../utility/password';
 import { error_json, generateRandomString, success_json } from '../../utility/helper';
 import { users } from '../../db/schema';
-import { emailVerifiedSuccessMessage, loginSuccessMessage, signUpSuccessMessage, verificationCodeSentInEmail, logoutSuccessMessage } from '../../utility/messages/success';
+import { emailVerifiedSuccessMessage, loginSuccessMessage, signUpSuccessMessage, verificationCodeSentInEmail } from '../../utility/messages/success';
 import { emailAlreadyUsedErrorMessage, emailErrorOrAlreadyVerified, emailNotVerifiedErrorMessage, emailOrPasswordErrorMessage, emailVerificaitonErrorMessage } from '../../utility/messages/errors';
 import { eq, and, not } from "drizzle-orm";
 import { db } from '../../db/db';
