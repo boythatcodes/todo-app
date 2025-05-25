@@ -35,8 +35,16 @@ export const registerUser = async (req: Request, res: Response) => {
 		return;
 	}
 
-	await send_mail(auth.email, "Verification for Proshore todo app.", `<b>Thankyou for choosing proshore todo app.</b><div>You can use the link to verfify your account <a href="${process.env.WEBAPP_URL}/user/verify-email?e=${auth.email}&v=${emailVerificationCode}">${process.env.WEBAPP_URL}/user/verify-email?e=${auth.email}&v=${emailVerificationCode}</a> </div>`)
-
+	try {
+		await send_mail(auth.email, "Verification for Proshore todo app.", `<b>Thankyou for choosing proshore todo app.</b><div>You can use the link to verfify your account <a href="${process.env.WEBAPP_URL}/user/verify-email?e=${auth.email}&v=${emailVerificationCode}">${process.env.WEBAPP_URL}/user/verify-email?e=${auth.email}&v=${emailVerificationCode}</a> </div>`)
+	} catch (error) {
+		success_json(res, signUpSuccessMessage, {
+			code: emailVerificationCode,
+			email: auth.email,
+			url: "/email-verification?e=" + auth.email
+		}, "redirect")
+		return;
+	}
 
 	if (process.env.DEV == "true") {
 		success_json(res, signUpSuccessMessage, {
